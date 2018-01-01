@@ -18,14 +18,17 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
   console.log('New user connected');
 
-  socket.emit('newMessage', {
-    from: 'John',
-    text: 'Hello!',
-    createdAt: 123
-  });
+
 
   socket.on('createMessage', (message) => {
     console.log('createMessage', message);
+    // io.emit emite un mensaje para todas las conexiones, todos los sockets abiertos
+    // socket.emit lo hace para una sola conexion
+    io.emit('newMessage', {
+      from: message.from,
+      text: message.text,
+      createdAt: new Date().getTime()
+    });
   });
 
   socket.on('disconnect', () => {
