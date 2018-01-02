@@ -10,8 +10,6 @@ describe('generateMessage', () => {
 
     expect(typeof message.createdAt).toBe('number');
     expect(message).toMatchObject({from,text});
-    expect(message.from).toBe(from);
-    expect(message.text).toBe(text);
   });
 });
 
