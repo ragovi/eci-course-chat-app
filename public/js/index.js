@@ -1,5 +1,21 @@
 var socket = io();
 
+function scrollToBottom () {
+  // Selector
+  var messages = jQuery('#messages');
+  var newMessage = messages.children('li:last-child');
+  // Heigths
+  var clientHeight = messages.prop('clientHeight'); // prop es una alternativa de jQuery para obtener propriedades que nos asegura cross compatibility
+  var scrollTop = messages.prop('scrollTop');
+  var scrollHeight = messages.prop('scrollHeight');
+  var newMessageHeight = newMessage.innerHeight();
+  var lastMessageHeight = newMessage.prev().innerHeight();
+
+  if (clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
+    messages.scrollTop(scrollHeight);
+  }
+};
+
 socket.on('connect', function () {
   console.log('Connected to server');
 });
@@ -18,6 +34,7 @@ socket.on('newMessage', function (message) {
   });
 
   jQuery('#messages').append(html);
+  scrollToBottom();
 });
 
 socket.on('newLocationMessage', function(message) {
@@ -30,6 +47,7 @@ socket.on('newLocationMessage', function(message) {
   });
 
   jQuery('#messages').append(html);
+  scrollToBottom();
 });
 
 // socket.emit('createMessage', {
