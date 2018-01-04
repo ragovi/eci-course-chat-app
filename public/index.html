@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <link rel="stylesheet" href="/css/styles.css">
   </head>
-  <body class="centered-form">
+  <body class="centered-form" onload="populateRooms()">
     <div class="centered-form__form">
       <form action="/chat.html">
         <div class="form-field">
@@ -24,7 +24,15 @@
         <div class="form-field">
           <button>Join</button>
         </div>
+        <div class="form-field">
+          <label>Available rooms now</label>
+          <select name="rooms" />
+        </div>
       </form>
     </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/libs/jquery-3.2.1.min.js"></script>
+    <script src="/js/index.js"></script>
   </body>
 </html>

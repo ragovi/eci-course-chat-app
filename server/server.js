@@ -24,17 +24,30 @@ io.on('connection', (socket) => {
 
 
   socket.on('join', (params, callback) => {
-    if (!isRealString(params.name) || !isRealString(params.room)) {
+    var user = users.getUserByName(params.name);
+
+    if (user) {
+      return callback('Name already in use.');
+    }
+
+    if (!isRealString(params.name) || !(isRealString(params.room) || isRealString(params.rooms))) {
       return callback('Name and room name are required.');
     }
 
-    socket.join(params.room);
-    users.removeUser(socket.id);
-    users.addUser(socket.id, params.name, params.room);
+    var room;
+    if (!params.room) {
+      room = params.rooms;
+    } else {
+      room = params.room.toLowerCase();
+    }
 
-    io.to(params.room).emit('updateUserList', users.getUserList(params.room));
+    socket.join(room);
+    users.removeUser(socket.id);
+    users.addUser(socket.id, params.name, room);
+
+    io.to(room).emit('updateUserList', users.getUserList(room));
     socket.emit('newMessage', generateMessage('Admin', 'Welcome to the chat app'));
-    socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', `${params.name} has joined`));
+    socket.broadcast.to(room).emit('newMessage', generateMessage('Admin', `${params.name} has joined`));
 
     callback();
   });
@@ -47,6 +60,11 @@ io.on('connection', (socket) => {
     }
 
     callback();
+  });
+
+  socket.on('getRooms', (message, callback) => {
+    var rooms = users.getRooms();
+    callback(rooms);
   });
 
   socket.on('createLocationMessage', (coords) => {
