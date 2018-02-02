@@ -19,7 +19,7 @@ var users = new Users();
 app.use(express.static(publicPath));
 // io.on register an event listenr for especific event and do something
 // 'connection' permite registrar nuevas conexiones y abre el serversocket
-io.on('connection', (socket) => {
+io.on("connection", (socket) => {
   console.log('New user connected');
 
 
