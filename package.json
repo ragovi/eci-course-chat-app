@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server/server.js",
-    "test": "mocha server/**/*.test.js",
+    "test": "nyc mocha server/**/*.test.js",
     "test-watch": "nodemon --exec \"npm test\""
   },
   "engines": {
@@ -23,6 +23,7 @@
   "devDependencies": {
     "expect": "^22.0.3",
     "mocha": "^4.1.0",
-    "nodemon": "^1.14.7"
+    "nodemon": "^1.14.7",
+    "nyc": "^11.4.1"
   }
 }

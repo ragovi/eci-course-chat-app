@@ -14,7 +14,7 @@ function scrollToBottom () {
   if (clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
     messages.scrollTop(scrollHeight);
   }
-};
+}
 
 socket.on('connect', function () {
   // console.log('Connected to server');
@@ -25,7 +25,7 @@ socket.on('connect', function () {
       alert(err);
       window.location.href = '/';
     } else {
-      console.log('No error');
+      console.log("No error");
     }
   });
 });
@@ -53,7 +53,7 @@ socket.on('newMessage', function (message) {
     createdAt: formattedTime
   });
 
-  jQuery('#messages').append(html);
+  jQuery("#messages").append(html);
   scrollToBottom();
 });
 
@@ -77,7 +77,7 @@ socket.on('newLocationMessage', function(message) {
 //   console.log('Got it', data);
 // });
 
-jQuery('#message-form').on('submit', function(event) {
+jQuery("#message-form").on('submit', function(event) {
   event.preventDefault();
 
   var messageTextbox = jQuery('[name=message]');
@@ -89,7 +89,7 @@ jQuery('#message-form').on('submit', function(event) {
   });
 });
 
-var locationButton = jQuery('#send-location');
+var locationButton = jQuery("#send-location");
 locationButton.on('click', () => {
   if (!navigator.geolocation) {
     return alert('Geolocation not supporrted by your browser');
